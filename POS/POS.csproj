@@ -154,6 +154,22 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GithubSharp.Core, Version=1.0.4289.25885, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GithubSharp.Core.0.0.5.1\lib\GithubSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GithubSharp.Plugins.CacheProviders.ApplicationCacher, Version=1.0.4289.25886, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GithubSharp.Plugins.All.0.0.5.1\lib\GithubSharp.Plugins.CacheProviders.ApplicationCacher.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GithubSharp.Plugins.CacheProviders.WebCache, Version=1.0.4289.25886, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GithubSharp.Plugins.All.0.0.5.1\lib\GithubSharp.Plugins.CacheProviders.WebCache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GithubSharp.Plugins.LogProviders.SimpleLogProvider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GithubSharp.Plugins.All.0.0.5.1\lib\GithubSharp.Plugins.LogProviders.SimpleLogProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
