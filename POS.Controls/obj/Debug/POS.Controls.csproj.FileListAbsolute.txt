@@ -1,0 +1,10 @@
+S:\Ibrahim\POS\POS\POS.Controls\bin\Debug\POS.Controls.dll
+S:\Ibrahim\POS\POS\POS.Controls\bin\Debug\POS.Controls.pdb
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.Controls.dll
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.Controls.pdb
+S:\Ibrahim\POS\POS\POS.Controls\bin\Debug\en\POS.Controls.resources.dll
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.POSGridControl.resources
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.POSGridControl.en.resources
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.Controls.csproj.GenerateResource.Cache
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\POS.Controls.dll.licenses
+S:\Ibrahim\POS\POS\POS.Controls\obj\Debug\en\POS.Controls.resources.dll

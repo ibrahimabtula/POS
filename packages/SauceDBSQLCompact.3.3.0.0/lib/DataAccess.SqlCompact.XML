@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DataAccess.SqlCompact</name>
+    </assembly>
+    <members>
+        <member name="T:DataAccess.SqlCompact.Linq.TSqlFormatter">
+            <summary>
+            Formats a query expression into TSQL language syntax
+            </summary>
+        </member>
+        <member name="T:DataAccess.SqlCompact.Linq.TSqlLanguage">
+            <summary>
+            TSQL specific QueryLanguage
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.QueryRow.FieldHasMapping(System.String)">
+            <summary>
+            Indicates if a field contains a mapping
+            </summary>
+            <param name="field"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.QueryRow.GetDataForRowField(System.Int32)">
+            <summary>
+            Returns the data for a given field and row
+            </summary>
+            <param name="field">The fields location</param>
+            <param name="row">The row</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.QueryRow.GetDataForRowField(System.String)">
+            <summary>
+            Returns the data for a given field and row
+            </summary>
+            <param name="field">The fields name</param>
+            <param name="row">The row index</param>
+            <returns></returns>
+        </member>
+        <member name="T:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator">
+            <summary>
+            Enumerates a query result set
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.#ctor(DataAccess.SqlCompact.SqlCompactQueryData)">
+            <summary>
+            Initializes a new instance of the <see cref="!:QueryEnumerator"/> class.
+            </summary>
+            <param name="reader">The reader.</param>
+            <param name="qd">The qd.</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>
+            true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
+            </returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.Reset">
+            <summary>
+            Not implemented
+            </summary>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.Current">
+            <summary>
+            Gets the element in the collection at the current position of the enumerator.
+            </summary>
+            <returns>The element in the collection at the current position of the enumerator.</returns>
+        </member>
+        <member name="P:DataAccess.SqlCompact.Results.SqlCompactQueryEnumerator.System#Collections#IEnumerator#Current">
+            <summary>
+            Gets the element in the collection at the current position of the enumerator.
+            </summary>
+            <returns>The element in the collection at the current position of the enumerator.</returns>
+        </member>
+        <member name="T:DataAccess.SqlCompact.SqlCompactCommandGenerator">
+            <summary>
+            Generates various types of data store Commands, appropriate for Sql Server
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:SqlServerCompactCommandGenerator"/> class.
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.GetAddTableCommand(DataAccess.Core.Data.TypeInfo)">
+            <summary>
+            Returns a command for creating a new table
+            </summary>
+            <param name="ti">The type to create a table for</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.GetRemoveColumnCommand(DataAccess.Core.Data.TypeInfo,DataAccess.Core.Data.DataFieldInfo)">
+            <summary>
+            Returns a command for removing a column from a table
+            </summary>
+            <param name="type">The type to remove the column from</param>
+            <param name="dfi">The column to remove</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.GetAddColumnCommnad(DataAccess.Core.Data.TypeInfo,DataAccess.Core.Data.DataFieldInfo)">
+            <summary>
+            Returns a command for adding a column to a table
+            </summary>
+            <param name="type">The type to add the column to</param>
+            <param name="dfi">The column to add</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.GetModifyColumnCommand(DataAccess.Core.Data.TypeInfo,DataAccess.Core.Data.DataFieldInfo,System.String)">
+            <summary>
+            Gets a command for changing a column type
+            </summary>
+            <param name="type">The type</param>
+            <param name="dfi">The field</param>
+            <param name="targetFieldType">The new column type</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.ResolveTableName(DataAccess.Core.Data.TypeInfo,System.Boolean)">
+            <summary>
+            /// Gets a table name for a type
+            </summary>
+            <param name="ti">The table name</param>
+            <param name="EscapeTableName">ignored</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactCommandGenerator.ResolveTableName(DataAccess.Core.Data.TypeInfo)">
+            <summary>
+            Gets a table name for a type
+            </summary>
+            <param name="ti">The type</param>
+            <returns></returns>
+        </member>
+        <member name="T:DataAccess.SqlCompact.SqlCompactConnection">
+            <summary>
+            A connection for sql server
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="!:SqlServerConnection"/> class with a connection string appropriate for sql server 2k8
+            </summary>
+            <param name="Server">The server.</param>
+            <param name="Catalog">The catalog.</param>
+            <param name="User">The user.</param>
+            <param name="Password">The password.</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetConnection">
+            <summary>
+            Gets the connection.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetCommand">
+            <summary>
+            Gets a data command for this connection type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetParameter">
+            <summary>
+            Gets a data parameter for this connection type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetParameter(System.String,System.Object)">
+            <summary>
+            Gets a data parameter for this connection type
+            </summary>
+            <param name="name">The parameters name</param>
+            <param name="value">The value of the parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetDataStore(System.String)">
+            <summary>
+            Gets a data store configured for sql server
+            </summary>
+            <param name="connection">The connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.TruncateTable``1(DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Will execute a command to 'truncate' a table
+            </summary>
+            <typeparam name="T">The type to truncate</typeparam>
+            <param name="dstore">The data store to use when executing</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.TruncateTable(System.Type,DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Will execute a command to 'truncate' a table
+            </summary>
+            <param name="t">The type to truncate</param>
+            <param name="dstore">The data store to use when executing</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.DoBulkInsert(System.Collections.IList,DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Inserts a list of items using SqlBulkCopy
+            </summary>
+            <param name="items">The items to insert</param>
+            <param name="dstore">The data store to use when executing</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetQueryProvider(DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Gets a query provider
+            </summary>
+            <param name="dStore">the datastore to attach it to</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetDeleteFormatter(DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Gets a delete formatter
+            </summary>
+            <param name="dstore">the datastore to attach it to</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetSchemaTables(DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Gets the tables for a datastore
+            </summary>
+            <param name="dstore">the datastore to fetch from</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactConnection.GetSchemaViews(DataAccess.Core.Interfaces.IDataStore)">
+            <summary>
+            Gets the views for a datastore
+            </summary>
+            <param name="dstore">the datastore to fetch from</param>
+            <returns></returns>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.CLRConverter">
+            <summary>
+            Converts data on the way out that is Datastore -&gt; CLR
+            </summary>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.DatastoreConverter">
+            <summary>
+            Coverts data on the way in that is, CLR -&gt; Datastore
+            </summary>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.CommandGenerator">
+            <summary>
+            The command generator for this data store
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.LeftEscapeCharacter">
+            <summary>
+            the data stores escape character (left side)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.RightEscapeCharacter">
+            <summary>
+            the data stores escape character (right side)
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactConnection.DefaultSchema">
+            <summary>
+            The default schema for this data store
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DataAccess.SqlCompact.SqlCompactDataStore">
+            <summary>
+            Creates a datastore for sql server
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactDataStore.#ctor(System.String)">
+            <summary>
+            Creates a new datastore (integrated auth)
+            </summary>
+            <param name="Server">the server to connect to</param>
+            <param name="Catalog">The catalog to use</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DataAccess.Core.Execute.ExecuteCommands"/> class.
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.ExecuteCommandQuery(System.Data.IDbCommand,DataAccess.Core.Interfaces.IDataConnection)">
+            <summary>
+            Executes a command and returns the result
+            </summary>
+            <param name="command">The command to execute</param>
+            <param name="connection">The connection to use</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.MapReturnData(System.Data.IDbCommand,DataAccess.SqlCompact.SqlCompactQueryData,System.Data.IDataReader)">
+            <summary>
+            Maps return data to the query data
+            </summary>
+            <param name="command">The command.</param>
+            <param name="toReturn">To return.</param>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.AddRecord(DataAccess.SqlCompact.SqlCompactQueryData,System.Data.IDataReader)">
+            <summary>
+            Adds a record to the result set
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.FireExecutingEvent(System.Data.IDbCommand,DataAccess.Core.Interfaces.IDataConnection,System.Data.IDbConnection)">
+            <summary>
+            Fires an  event.
+            </summary>
+            <param name="command">The command.</param>
+            <param name="connection">The connection.</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactExecuteCommands.ExecuteCommand(System.Data.IDbCommand,DataAccess.Core.Interfaces.IDataConnection)">
+            <summary>
+            Executes a command on the data store
+            </summary>
+            <param name="command">The command to execute</param>
+            <param name="connection">The connection to use</param>
+        </member>
+        <member name="E:DataAccess.SqlCompact.SqlCompactExecuteCommands.CommandExecuting">
+            <summary>
+            This event will fire just before a command is executed
+            </summary>
+        </member>
+        <member name="T:DataAccess.SqlCompact.SqlCompactTypeConverter">
+            <summary>
+            A type converter specific to SQL ce
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactTypeConverter.ConvertToType(System.Object,System.Type)">
+            <summary>
+            Converts to type, handles SQL min date
+            </summary>
+            <param name="data">The data.</param>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="T:DataAccess.SqlCompact.SqlCompactQueryData">
+            <summary>
+            Holds the query result data
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.AddFieldMapping(System.String,System.Int32)">
+            <summary>
+            Add a field mapping
+            </summary>
+            <param name="field">The field name</param>
+            <param name="location">The location the field is in the rows</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.SetFieldMappings(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Sets the field mappings.
+            </summary>
+            <param name="maps">The maps.</param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.GetMappings">
+            <summary>
+            Retrieves the data mappings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.AddRowData(System.Object[])">
+            <summary>
+            Adds a row of data
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.FieldHasMapping(System.String)">
+            <summary>
+            Indicates if a field contains a mapping
+            </summary>
+            <param name="field"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.GetDataForRowField(System.Int32)">
+            <summary>
+            Returns the data for a given field and row
+            </summary>
+            <param name="field">The fields location</param>
+            <param name="row">The row</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.GetDataForRowField(System.String)">
+            <summary>
+            Returns the data for a given field and row
+            </summary>
+            <param name="field">The fields name</param>
+            <param name="row">The row index</param>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.GetFields">
+            <summary>
+            Gets the fields.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DataAccess.SqlCompact.SqlCompactQueryData.MoveNext">
+            <summary>
+            Advances the enumerator to the next element of the collection.
+            </summary>
+            <returns>
+            true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
+            </returns>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactQueryData.QuerySuccessful">
+            <summary>
+            Indicates if the query was successful
+            </summary>
+        </member>
+        <member name="P:DataAccess.SqlCompact.SqlCompactQueryData.ResultData">
+            <summary>
+            The data set
+            </summary>
+        </member>
+    </members>
+</doc>

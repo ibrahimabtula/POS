@@ -1,0 +1,14 @@
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\POS.Library.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\POS.Library.pdb
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\CSLA.Core.BindableBase.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\CSLA.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\CSLA.Resources.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\CSLA.Server.DataPortal.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\CSLA.Server.ServicedDataPortal.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.Core.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.SqlCompact.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\System.Data.SqlServerCe.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.Core.xml
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.SqlCompact.xml
+C:\IBRAHIM\POS\POS.Library\obj\x86\Debug\POS.Library.dll
+C:\IBRAHIM\POS\POS.Library\obj\x86\Debug\POS.Library.pdb
