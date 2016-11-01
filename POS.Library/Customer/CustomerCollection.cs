@@ -1,9 +1,12 @@
 ﻿using CSLA;
 using CSLA.Data;
+using Dapper;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
+using System.Linq;
 
 namespace POS.Library
 {
@@ -131,67 +134,36 @@ namespace POS.Library
         protected override void DataPortal_Fetch(object criteria)
         {
             //retrieve data from database
-            Criteria crit = (Criteria)criteria;           
+            Criteria crit = (Criteria)criteria;
 
-            using (var cn = ConnectionBuilder.GetOpenedConnection())
+            using (IDbConnection connection = SQLiteConnectionBuilder.GetOpenedConnection())
             {
-                using (var cm = new SqlCeCommand())
+                using (var transaction = connection.BeginTransaction())
                 {
-                    try
-                    {
-                        using (SqlCeTransaction tr = cn.BeginTransaction(IsolationLevel.ReadCommitted))
-                        {
-                            cm.Connection = cn;
-                            cm.Transaction = tr;
-                            cm.CommandType = CommandType.Text;
-
-                            cm.CommandText = @"
+                    const string query = @"
 SELECT  
     [ID]
     ,[FirstName]
     ,[LastName]
-FROM [Customer] 
-WHERE 1 = 1";
-
-                            using (var dr = new SafeDataReader(cm.ExecuteReader()))
-                            {
-                                while (dr.Read())
-                                {
-                                    var customer = Customer.NewCustomer(0);
-                                    customer.Fetch(dr, new Customer.Criteria(0));
-                                    List.Add(customer);
-                                }
-
-                            }
-
-                            tr.Commit();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
-                    finally
-                    {
-                        cn.Close();
-                    }
+    ,Note
+FROM[Customer] ";
+                    AddRange(connection.Query<Customer>(query, null,transaction).Do(c=>c.MarkOld()));
+                    transaction.Commit();
                 }
             }
         }
 
         protected override void DataPortal_Update()
         {
-            using (var cn = ConnectionBuilder.GetOpenedConnection())
+            using (var cn = SQLiteConnectionBuilder.GetOpenedConnection())
             {
                 try
                 {
-                    using (SqlCeTransaction tr = cn.BeginTransaction(IsolationLevel.Serializable))
+                    using (var tr = cn.BeginTransaction(IsolationLevel.Serializable))
                     {
                         // Loop through each deleted child object and call its Update() method
                         foreach (Customer deletedChild in deletedList)
-                        {
                             deletedChild.Update(tr);
-                        }
 
                         // Then clear the list of deleted objects because they are truly gone now
                         deletedList.Clear();
@@ -203,11 +175,17 @@ WHERE 1 = 1";
                         tr.Commit();
                     }
                 }
+                catch(Exception e)
+                {
+                    throw;
+                }
                 finally
                 {
                     cn.Close();
                 }
             }
+
+            OnListChanged(new System.ComponentModel.ListChangedEventArgs(System.ComponentModel.ListChangedType.Reset,0));
         }
 
         #endregion //Data Access

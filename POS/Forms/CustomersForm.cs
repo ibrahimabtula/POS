@@ -36,6 +36,7 @@ namespace POS
 
             gvCustomers.AddColWithText("FirstName", "Име");
             gvCustomers.AddColWithText("LastName", "Фамилия");
+            gvCustomers.AddColWithMemoEx("Note", "Бележки");
         }
 
         #region overrides
@@ -74,6 +75,7 @@ namespace POS
 
         private void BwSave_DoWork(object sender, DoWorkEventArgs e)
         {
+            (gvCustomers.DataSource as CustomerCollection).ApplyEdit();
             (gvCustomers.DataSource as CustomerCollection).Save();
         }
 
@@ -112,7 +114,8 @@ namespace POS
 
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            e.Result = CustomerCollection.GetCustomerCollection(e.Argument as CustomerCollection.Criteria);            
+            e.Result = CustomerCollection.GetCustomerCollection(e.Argument as CustomerCollection.Criteria);
+            //e.Result = CustomerCollection.GetCustomerCollectionDapper();           
         }
 
         private void CustomersForm_ListChanged(object sender, ListChangedEventArgs e)

@@ -63,3 +63,13 @@ C:\IBRAHIM\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache
 C:\IBRAHIM\POS\POS\obj\x86\Debug\POS.exe.licenses
 C:\IBRAHIM\POS\POS\obj\x86\Debug\POS.exe
 C:\IBRAHIM\POS\POS\obj\x86\Debug\POS.pdb
+C:\IBRAHIM\POS\POS\bin\x86\Debug\GithubSharp.Core.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\GithubSharp.Plugins.CacheProviders.ApplicationCacher.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\GithubSharp.Plugins.CacheProviders.WebCache.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\GithubSharp.Plugins.LogProviders.SimpleLogProvider.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\Dapper.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\System.Data.SQLite.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\System.Data.SQLite.EF6.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\System.Data.SQLite.Linq.dll
+C:\IBRAHIM\POS\POS\bin\x86\Debug\Dapper.xml
+C:\IBRAHIM\POS\POS\bin\x86\Debug\System.Data.SQLite.xml

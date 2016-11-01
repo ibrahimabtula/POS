@@ -63,6 +63,9 @@
     <Reference Include="CSLA.Server.ServicedDataPortal">
       <HintPath>..\DLL\CSLA.Server.ServicedDataPortal.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\DLL\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="DataAccess.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=bfd02ced9c4349a2, processorArchitecture=MSIL">
       <HintPath>..\packages\SauceDBSQLCompact.3.3.0.0\lib\DataAccess.Core.dll</HintPath>
       <Private>True</Private>
@@ -71,8 +74,26 @@
       <HintPath>..\packages\SauceDBSQLCompact.3.3.0.0\lib\DataAccess.SqlCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\DLL\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\DLL\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\DLL\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\DLL\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\DLL\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
@@ -90,6 +111,7 @@
     <Compile Include="Exceptions\POSNoConnectionException.cs" />
     <Compile Include="Paymet\Payment.cs" />
     <Compile Include="Paymet\PaymentCollection.cs" />
+    <Compile Include="POSExtensions.cs" />
     <Compile Include="POSGlobal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

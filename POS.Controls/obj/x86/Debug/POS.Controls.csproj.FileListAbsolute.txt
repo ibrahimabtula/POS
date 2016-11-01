@@ -41,3 +41,4 @@ C:\IBRAHIM\POS\POS.Controls\obj\x86\Debug\POS.Controls.csproj.GenerateResource.C
 C:\IBRAHIM\POS\POS.Controls\obj\x86\Debug\en\POS.Controls.resources.dll
 C:\IBRAHIM\POS\POS.Controls\obj\x86\Debug\POS.Controls.dll
 C:\IBRAHIM\POS\POS.Controls\obj\x86\Debug\POS.Controls.pdb
+C:\IBRAHIM\POS\POS.Controls\obj\x86\Debug\POS.Controls.csprojResolveAssemblyReference.cache

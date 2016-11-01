@@ -12,3 +12,16 @@ C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.Core.xml
 C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\DataAccess.SqlCompact.xml
 C:\IBRAHIM\POS\POS.Library\obj\x86\Debug\POS.Library.dll
 C:\IBRAHIM\POS\POS.Library\obj\x86\Debug\POS.Library.pdb
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\Dapper.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.SqlServer.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.SqlServerCompact.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\System.Data.SQLite.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\System.Data.SQLite.EF6.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\System.Data.SQLite.Linq.dll
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\Dapper.xml
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.xml
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.SqlServer.xml
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\EntityFramework.SqlServerCompact.xml
+C:\IBRAHIM\POS\POS.Library\bin\x86\Debug\System.Data.SQLite.xml
+C:\IBRAHIM\POS\POS.Library\obj\x86\Debug\POS.Library.csprojResolveAssemblyReference.cache

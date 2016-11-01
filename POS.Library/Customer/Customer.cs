@@ -1,20 +1,21 @@
 ﻿using CSLA;
 using CSLA.Data;
+using Dapper;
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Data.SqlServerCe;
 
 namespace POS.Library
 {
     [Serializable]
-    public class Customer : CSLA.BusinessBase
+    public class Customer : BusinessBase
     {
         #region Class Level Private Variables
 
         private long _id = 0; //PK
         private string _fName = string.Empty;
         private string _lName = string.Empty;
+        private string _note = string.Empty;
 
         #endregion //Class Level Private Variables
 
@@ -32,6 +33,7 @@ namespace POS.Library
         public long ID
         {
             get { return _id; }
+            set { _id = value; }
         }
 
         public string FirstName
@@ -59,11 +61,26 @@ namespace POS.Library
             get { return _fName + " " + _lName; }
         }
 
+        public string Note
+        {
+            get { return _note; }
+            set
+            {
+                _note = value;
+                MarkDirty();
+            }
+        }
+
         public bool IsSaveable
         {
             //Since you cannot bind a control to multiple properties you need to create a property that combines the ones you need
             //In this case, bind the UI Save button Enabled property to IsSaveable. (Why save an object that has not changed?)
             get { return IsValid && IsDirty; }
+        }
+
+        public new void MarkOld()
+        {
+            base.MarkOld();
         }
 
         #endregion //Business Properties and Methods
@@ -144,7 +161,7 @@ namespace POS.Library
 
             using (var cn = ConnectionBuilder.GetOpenedConnection())
             {
-                using (var tr = cn.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
+                using (var tr = cn.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
                     try
                     {
@@ -153,101 +170,67 @@ namespace POS.Library
                     }
                     catch (Exception e)
                     {
+                        tr.Rollback();
                         throw;
-                    }
-                    finally
-                    {
-                        cn.Close();
                     }
                 }
             }
         }
 
-        internal void DBFetch(Criteria crit, SqlCeTransaction tr)
+        internal void DBFetch(Criteria crit, IDbTransaction tr)
         {
             if (!IsDirty) return;
-            using (var cm = new SqlCeCommand())
-            {
-                cm.Connection = (SqlCeConnection)tr.Connection;
-                cm.CommandType = CommandType.Text;
-                cm.Transaction = tr;
-                cm.CommandText = @"
+
+
+                const string query = @"
 SELECT
     ID
     ,FirstName
     ,LastName
+    ,Note
 FROM Customer
 WHERE ID = @ID";
-                cm.Parameters.AddWithValue("@ID", crit.ID);
-
-                using (var dr = new SafeDataReader(cm.ExecuteReader()))
-                {
-                    if (dr.Read())
-                    {
-                        Fetch(dr, crit);
-                    }
-                }
-            }
+                Customer c = tr.Connection.QueryFirst<Customer>(query, this, tr);
+                _id = c._id;
+                _fName = c._fName;
+                _lName = c._lName;
+                _note = c._note; 
         }
 
         protected override void DataPortal_Update()
         {
             if (!IsDirty) return;
-            SqlCeConnection cn = ConnectionBuilder.GetConnection();
-            SqlCeCommand cm = new SqlCeCommand();
-            SqlCeTransaction tr;
-
-            try
+            using (var cn = SQLiteConnectionBuilder.GetOpenedConnection())
             {
-                cn.Open();
-               // Common.RaiseError(Common.MarisanErrors.None, Convert.ToInt32(MarisanProcessControl.Common.MachineType));
-            }
-            catch
-            {
-               // Common.RaiseError(Common.MarisanErrors.NoConnectionWithServer, Convert.ToInt32(MarisanProcessControl.Common.MachineType));
-                return;
-            }
-            try
-            {
-                tr = cn.BeginTransaction(IsolationLevel.Serializable);
-                try
+                using (var tr = cn.BeginTransaction(IsolationLevel.Serializable))
                 {
-                    Update(tr);
-                    tr.Commit();
+                    try
+                    {
+                        Update(tr);
+                        tr.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (tr.Connection != null) { tr.Rollback(); }
+                        throw ex;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    if (tr.Connection != null) { tr.Rollback(); }
-                    throw ex;
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                cn.Close();
             }
         }
 
-        internal void Update(SqlCeTransaction tr)
+        internal void Update(IDbTransaction tr)
         {
             if (!IsDirty) return;
-            SqlCeCommand cm = new SqlCeCommand();
-            cm.Connection = (SqlCeConnection)tr.Connection;
-            cm.Transaction = tr;
-            cm.CommandType = CommandType.Text;
+
+            string query = string.Empty;         
 
             if (this.IsDeleted)
             {
                 //is deleted object, check if new
                 if (!this.IsNew)
-                {
-                    cm.CommandText = "DELETE FROM Customer WHERE ID = @ID";//"UPDATE Customer SET IsDeleted = 1 WHERE ID = @ID";
-                    cm.Parameters.AddWithValue("@ID", _id);
-
-                    cm.ExecuteNonQuery();
+                {    
+                    query = "DELETE FROM Customer WHERE ID = @ID";
+                    tr.Connection.Execute(query, new { ID = _id}, tr);     
                 }
                 // reset the object status to be new
                 MarkNew();
@@ -257,52 +240,48 @@ WHERE ID = @ID";
                 // is not deleted object, check if this is an update or insert
                 if (this.IsNew)
                 {
-                    cm.CommandText = @"
-INSERT INTO [Customer ]
-([FirstName],[LastName]) 
-VALUES(@FirstName,@LastName)";
+                    query = @"
+INSERT INTO [Customer]
+([FirstName],[LastName],Note) 
+VALUES(@FirstName, @LastName, @Note)";
                 }
                 else
                 {
                     //perform an update, object is not new so object has already been persisted
-                    cm.CommandText = @"
-UPDATE Customer
+                    query = @"
+UPDATE [Customer]
 SET 
     FirstName = @FirstName,
-    LastName = @LastName
+    LastName = @LastName,
+    Note = @Note
 WHERE ID = @ID";
-                    cm.Parameters.AddWithValue("@ID", _id);
+                    //parameter.Add("@ID", _id);
                 }
-                cm.Parameters.AddWithValue("@FirstName", _fName);
-                cm.Parameters.AddWithValue("@LastName", _lName);
 
                 if (IsNew)
                 {
-                    cm.ExecuteNonQuery();
-                    cm.CommandText = "select @@IDENTITY";
-                    _id = Convert.ToInt32(cm.ExecuteScalar());
+                    int rows = tr.Connection.Execute(query, this, tr);
+                    tr.Connection.SetIdentity<int>(id => _id = id);
                 }
                 else
                 {
-                    cm.ExecuteNonQuery();
+                    tr.Connection.Execute(query, this, tr);
                 }
 
                 // update child object, passing the transaction
-
-
                 // mark the object as old (persisted)
                 MarkOld();
             }
         }
 
-        public void Fetch(SafeDataReader dr, Criteria crit)
+        /*public void Fetch(SafeDataReader dr, Criteria crit)
         {
             _id = dr.GetInt64("ID");
             _fName = dr.GetString("FirstName");
             _lName = dr.GetString("LastName");
 
             MarkOld();
-        }
+        }*/
 
         #endregion
     }

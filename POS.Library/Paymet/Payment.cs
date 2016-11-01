@@ -1,5 +1,6 @@
 ﻿using CSLA;
 using CSLA.Data;
+using Dapper;
 using System;
 using System.Data;
 using System.Data.SqlServerCe;
@@ -32,6 +33,7 @@ namespace POS.Library
         public int ID
         {
             get { return _id; }
+            set { _id = value; }
         }
 
         public decimal Sum
@@ -84,6 +86,11 @@ namespace POS.Library
         public override int GetHashCode()
         {
             return ("Payment" + "/" + _id.ToString()).GetHashCode();
+        }
+
+        public new void MarkOld()
+        {
+            base.MarkOld();
         }
 
         #endregion //System.Object Overrides
@@ -164,15 +171,12 @@ namespace POS.Library
             }
         }
 
-        internal void DBFetch(Criteria crit, SqlCeTransaction tr)
+        internal void DBFetch(Criteria crit, IDbTransaction tr)
         {
             if (!IsDirty) return;
             using (var cm = new SqlCeCommand())
             {
-                cm.Connection = (SqlCeConnection)tr.Connection;
-                cm.CommandType = CommandType.Text;
-                cm.Transaction = tr;
-                cm.CommandText = @"
+                  string query = @"
 SELECT
     ID
     ,CustomerID
@@ -180,76 +184,50 @@ SELECT
     ,PaymentDate
 FROM Payment
 WHERE ID = @ID";
-                cm.Parameters.AddWithValue("@ID", crit.ID);
 
-                using (var dr = new SafeDataReader(cm.ExecuteReader()))
-                {
-                    if (dr.Read())
-                    {
-                        Fetch(dr, crit);
-                    }
-                }
+                var result = tr.Connection.QueryFirst<Payment>(query, this, tr);
+                _id = result._id;
+                _sum = result._sum;
+                _customerId = result._customerId;
+                _paymetDate = result._paymetDate;
             }
         }
 
         protected override void DataPortal_Update()
         {
             if (!IsDirty) return;
-            SqlCeConnection cn = ConnectionBuilder.GetConnection();
-            SqlCeCommand cm = new SqlCeCommand();
-            SqlCeTransaction tr;
-
-            try
+            using (var cn = SQLiteConnectionBuilder.GetOpenedConnection())
             {
-                cn.Open();
-               // Common.RaiseError(Common.MarisanErrors.None, Convert.ToInt32(MarisanProcessControl.Common.MachineType));
-            }
-            catch
-            {
-               // Common.RaiseError(Common.MarisanErrors.NoConnectionWithServer, Convert.ToInt32(MarisanProcessControl.Common.MachineType));
-                return;
-            }
-            try
-            {
-                tr = cn.BeginTransaction(IsolationLevel.Serializable);
-                try
+                using (var tr = cn.BeginTransaction())
                 {
-                    Update(tr);
-                    tr.Commit();
+                    try
+                    {
+                        Update(tr);
+                        tr.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (tr.Connection != null) { tr.Rollback(); }
+                        throw ex;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    if (tr.Connection != null) { tr.Rollback(); }
-                    throw ex;
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            finally
-            {
-                cn.Close();
             }
         }
 
-        internal void Update(SqlCeTransaction tr)
+        internal void Update(IDbTransaction tr)
         {
             if (!IsDirty) return;
-            SqlCeCommand cm = new SqlCeCommand();
-            cm.Connection = (SqlCeConnection)tr.Connection;
-            cm.Transaction = tr;
-            cm.CommandType = CommandType.Text;
+
+            string query = string.Empty;
+            var parameter = new DynamicParameters();
 
             if (this.IsDeleted)
             {
                 //is deleted object, check if new
                 if (!this.IsNew)
                 {
-                    cm.CommandText = "DELETE FROM Payment WHERE ID = @ID";//"UPDATE Payment SET IsDeleted = 1 WHERE ID = @ID";
-                    cm.Parameters.AddWithValue("@ID", _id);
-
-                    cm.ExecuteNonQuery();
+                    query = "DELETE FROM Payment WHERE ID = @ID";
+                    tr.Connection.Execute(query, new { ID = _id }, tr);
                 }
                 // reset the object status to be new
                 MarkNew();
@@ -259,47 +237,41 @@ WHERE ID = @ID";
                 // is not deleted object, check if this is an update or insert
                 if (this.IsNew)
                 {
-                    cm.CommandText = @"
-INSERT INTO [Payment ]
+                    query = @"
+INSERT INTO [Payment]
 ([CustomerID],[Sum], PaymentDate) 
 VALUES(@CustomerID,@Sum, @PaymentDate)";
                 }
                 else
                 {
                     //perform an update, object is not new so object has already been persisted
-                    cm.CommandText = @"
+                    query = @"
 UPDATE Payment
 SET 
     Sum = @Sum
     ,CustomerID = @CustomerID
     ,PaymentDate = @PaymentDate
 WHERE ID = @ID";
-                    cm.Parameters.AddWithValue("@ID", _id);
+
                 }
-                cm.Parameters.AddWithValue("@Sum", Sum);
-                cm.Parameters.AddWithValue("@CustomerID", CustomerID);
-                cm.Parameters.AddWithValue("@PaymentDate", new SmartDate(PaymentDate).DBValue);
 
                 if (IsNew)
                 {
-                    cm.ExecuteNonQuery();
-                    cm.CommandText = "select @@IDENTITY";
-                    _id = Convert.ToInt32(cm.ExecuteScalar());
+                    int rows = tr.Connection.Execute(query, this, tr);
+                    tr.Connection.SetIdentity<int>(id => _id = id);
                 }
                 else
                 {
-                    cm.ExecuteNonQuery();
+                    tr.Connection.Execute(query, this, tr);
                 }
 
                 // update child object, passing the transaction
-
-
                 // mark the object as old (persisted)
                 MarkOld();
             }
         }
 
-        public void Fetch(SafeDataReader dr, Criteria crit)
+        /*public void Fetch(SafeDataReader dr, Criteria crit)
         {
             _id = dr.GetInt32("ID");
             _sum = dr.GetDecimal("Sum");
@@ -307,7 +279,7 @@ WHERE ID = @ID";
             _paymetDate = dr.GetDateTime("PaymentDate");
 
             MarkOld();
-        }
+        }*/
 
         #endregion
     }

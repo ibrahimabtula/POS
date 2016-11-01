@@ -1,5 +1,7 @@
-﻿using System;
+﻿using POS.Library;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace POS
@@ -16,6 +18,8 @@ namespace POS
             bbiSearch.ItemClick += bbiSearch_ItemClick;
             bbiSave.ItemClick += bbiSave_ItemClick;
             DevExpress.Data.CurrencyDataController.DisableThreadingProblemsDetection = true;
+            ConnectionBuilder.ConnectionString = ConfigurationManager.ConnectionStrings["POSConnectionString"].ConnectionString;
+            SQLiteConnectionBuilder.ConnectionString = ConfigurationManager.ConnectionStrings["POSSQLiteConnectionString"].ConnectionString;
         }
 
         private void AddEvents()

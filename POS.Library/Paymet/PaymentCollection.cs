@@ -1,5 +1,6 @@
 ﻿using CSLA;
 using CSLA.Data;
+using Dapper;
 using System;
 using System.Data;
 using System.Data.SqlServerCe;
@@ -93,6 +94,8 @@ namespace POS.Library
         public class Criteria
         {
             public int ID = 0;
+            public DateTime DateFrom = DateTime.MinValue;
+            public DateTime DateTo = DateTime.MinValue;
 
             public Criteria()
             {
@@ -133,19 +136,13 @@ namespace POS.Library
             //retrieve data from database
             Criteria crit = (Criteria)criteria;           
 
-            using (var cn = ConnectionBuilder.GetOpenedConnection())
+            using (var cn = SQLiteConnectionBuilder.GetOpenedConnection())
             {
-                using (var cm = new SqlCeCommand())
+                try
                 {
-                    try
+                    using (var tr = cn.BeginTransaction(IsolationLevel.ReadCommitted))
                     {
-                        using (SqlCeTransaction tr = cn.BeginTransaction(IsolationLevel.ReadCommitted))
-                        {
-                            cm.Connection = cn;
-                            cm.Transaction = tr;
-                            cm.CommandType = CommandType.Text;
-
-                            cm.CommandText = @"
+                        string query = @"
 SELECT  
     [ID]
     ,[Sum]
@@ -153,40 +150,37 @@ SELECT
     ,PaymentDate
 FROM [Payment] 
 WHERE 1 = 1";
-
-                            using (var dr = new SafeDataReader(cm.ExecuteReader()))
-                            {
-                                while (dr.Read())
-                                {
-                                    var child = Payment.NewPayment(0);
-                                    child.Fetch(dr, new Payment.Criteria(0));
-                                    List.Add(child);
-                                }
-
-                            }
-
-                            tr.Commit();
+                        var parameters = new DynamicParameters();
+                        if (crit.DateFrom != DateTime.MinValue)
+                        {
+                            query += " AND PaymentDate >= @DateFrom";
+                            parameters.Add("@DateFrom", crit.DateFrom);
                         }
+
+                        if (crit.DateTo != DateTime.MinValue)
+                        {
+                            query += " AND PaymentDate <= @DateTo";
+                            parameters.Add("@DateTo", crit.DateTo);
+                        }
+
+                        AddRange(cn.Query<Payment>(query, parameters, tr).Do(c => c.MarkOld()));
+                        tr.Commit();
                     }
-                    catch (Exception e)
-                    {
-                        throw;
-                    }
-                    finally
-                    {
-                        cn.Close();
-                    }
+                }
+                catch (Exception e)
+                {
+                    throw;
                 }
             }
         }
 
         protected override void DataPortal_Update()
         {
-            using (var cn = ConnectionBuilder.GetOpenedConnection())
+            using (var cn = SQLiteConnectionBuilder.GetOpenedConnection())
             {
                 try
                 {
-                    using (SqlCeTransaction tr = cn.BeginTransaction(IsolationLevel.Serializable))
+                    using (var tr = cn.BeginTransaction(IsolationLevel.Serializable))
                     {
                         // Loop through each deleted child object and call its Update() method
                         foreach (Payment deletedChild in deletedList)
@@ -204,9 +198,9 @@ WHERE 1 = 1";
                         tr.Commit();
                     }
                 }
-                finally
+                catch(Exception e)
                 {
-                    cn.Close();
+
                 }
             }
         }

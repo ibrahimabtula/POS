@@ -117,6 +117,22 @@ namespace POS
             return col;
         }
 
+        public GridColumn AddColWithMemoEx(string field, string caption)
+        {
+            var repItem = new RepositoryItemMemoExEdit();
+
+            var col = new GridColumn();
+            col.ColumnEdit = repItem;
+            col.FieldName = field;
+            col.Caption = caption;
+            col.Name = field;
+            col.Visible = true;
+            col.VisibleIndex = 0;
+            col.Width = 150;
+            this.Columns.Add(col);
+            return col;
+        }
+
         public GridColumn AddColWithText(string field, string caption)
         {
             var col = new GridColumn();
