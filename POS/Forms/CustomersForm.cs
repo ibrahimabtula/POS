@@ -12,13 +12,53 @@ namespace POS
         private BackgroundWorker bwSave = null;
         private string _title = string.Empty;
         private CustomerCollection _customerCollection = CustomerCollection.NewCustomerCollection();
-        private SynchronizationContext _mainSC = null;
+        private SynchronizationContext _syncContextUI = null;
         public CustomersForm()
         {
             InitializeComponent();
 
             Load += CustomersForm_Load;
-            _mainSC = SynchronizationContext.Current;
+            gvCustomers.CustomUnboundColumnData += GvCustomers_CustomUnboundColumnData;
+            _syncContextUI = SynchronizationContext.Current;
+        }
+
+        private void GvCustomers_CustomUnboundColumnData(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDataEventArgs e)
+        {
+            /*
+               if(e.Column.FieldName == "Image" && e.IsGetData) {
+
+       GridView view = sender as GridView;
+
+
+
+       string colorName = (string)view.GetRowCellValue(e.RowHandle, "Color");
+
+       string fileName = GetFileName(colorName).ToLower();
+
+       if(!Images.ContainsKey(fileName)) {
+
+           Image img = null;
+
+           try {
+
+               string filePath = DevExpress.Utils.FilesHelper.FindingFileName(Application.StartupPath, ImageDir + fileName, false);
+
+               img = Image.FromFile(filePath);
+
+           }
+
+           catch {
+
+           }
+
+           Images.Add(fileName, img);
+
+       }
+
+       e.Value = Images[fileName];
+
+   }
+            */
         }
 
         void CustomersForm_Load(object sender, EventArgs e)
@@ -28,15 +68,25 @@ namespace POS
             Search();
         }
 
-        private void AddGridColumns()
+        protected override void OnActivated(EventArgs e)
         {
+            base.OnActivated(e);
+
             gvCustomers.OptionsView.ColumnAutoWidth = false;
             gvCustomers.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             gvCustomers.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
+            gvCustomers.OptionsView.ShowAutoFilterRow = true;
+        }
 
-            gvCustomers.AddColWithText("FirstName", "Име");
-            gvCustomers.AddColWithText("LastName", "Фамилия");
+        private void AddGridColumns()
+        {
+            gvCustomers.AddCol("FirstName", "Име");
+            gvCustomers.AddCol("LastName", "Фамилия");
             gvCustomers.AddColWithMemoEx("Note", "Бележки");
+            gvCustomers.AddColWithImage("Image", "Бележки");
+
+            var col = gvCustomers.AddCol("Imageadsa", "");
+            col.UnboundType = DevExpress.Data.UnboundColumnType.Object;
         }
 
         #region overrides
@@ -64,19 +114,24 @@ namespace POS
                 bwSave.RunWorkerCompleted += BwSave_RunWorkerCompleted;
             }
 
+            var coll = gvCustomers.DataSource as CustomerCollection;
+            gcCustomers.DataSource = null;
             Cursor = Cursors.WaitCursor;
-            bwSave.RunWorkerAsync();            
+            bwSave.RunWorkerAsync(coll);            
         }
 
         private void BwSave_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Cursor = Cursors.Default;
+            gcCustomers.DataSource = e.Result;
         }
 
         private void BwSave_DoWork(object sender, DoWorkEventArgs e)
         {
-            (gvCustomers.DataSource as CustomerCollection).ApplyEdit();
-            (gvCustomers.DataSource as CustomerCollection).Save();
+            var coll = (e.Argument as CustomerCollection);            
+            coll.ApplyEdit();
+            coll.Save();
+            e.Result = coll;         
         }
 
         public override void Search()
@@ -96,6 +151,8 @@ namespace POS
             Cursor = Cursors.WaitCursor;
             bwSearch.RunWorkerAsync(crite);
         }
+
+        #endregion//Overrides
 
         void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -120,7 +177,7 @@ namespace POS
 
         private void CustomersForm_ListChanged(object sender, ListChangedEventArgs e)
         {
-            _mainSC.Post(callback =>
+            _syncContextUI.Post(callback =>
             {
                 if ((gvCustomers.DataSource as CustomerCollection).IsDirty)
                     this.Text = _title + "*";
@@ -129,6 +186,34 @@ namespace POS
             }, 0);
         }
 
-        #endregion
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+
+            Load -= CustomersForm_Load;
+
+            if(bwSearch !=null)
+            {
+                bwSearch.DoWork -= bw_DoWork;
+                bwSearch.RunWorkerCompleted -= bw_RunWorkerCompleted;
+            }
+
+            if(bwSave != null)
+            {
+                bwSave.DoWork -= BwSave_DoWork;
+                bwSave.RunWorkerCompleted -= BwSave_RunWorkerCompleted;
+            }
+
+            gcCustomers.DataSource = null;
+
+            base.Dispose(disposing);
+        }        
     }
 }

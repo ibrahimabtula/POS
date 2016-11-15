@@ -27,6 +27,10 @@ namespace POS
             {
                 XtraMessageBox.Show("Няма връзка с базата данни", "POS", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch(Exception e)
+            {
+                XtraMessageBox.Show(e.Message);
+            }
         }
     }
 }

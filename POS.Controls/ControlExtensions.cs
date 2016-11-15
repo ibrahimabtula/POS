@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ namespace POS
 {
     public static class ControlExtensions
     {
-        public static void SaveLayout(this Control ctrl, string uniqueName, object property)
+        public static void SaveLayout(this Component component, string uniqueName, object property)
         {
-            if (ctrl == null  || property == null) { return; }
+            if (component == null  || property == null) { return; }
 
             if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Layouts"))
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "\\Layouts");
@@ -28,7 +29,7 @@ namespace POS
                     serializer.Serialize(stream, property);
                     stream.Position = 0;
                     xmlDocument.Load(stream);
-                    xmlDocument.Save(AppDomain.CurrentDomain.BaseDirectory + "Layouts\\" + ctrl.Name + "_" + uniqueName + ".xml");
+                    xmlDocument.Save(AppDomain.CurrentDomain.BaseDirectory + "Layouts\\" + component.ToString() + "_" + uniqueName + ".xml");
                     stream.Close();
                 }
             }
@@ -39,9 +40,9 @@ namespace POS
 
         }
 
-        public static void LoadLayout<T>(this Control ctrl, string uniqueName, string name)
+        public static void LoadLayout<T>(this Component component, string uniqueName, string name)
         {
-            if (ctrl == null || name.Length == 0) { return; }
+            if (component == null || name.Length == 0) { return; }
 
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Layouts"))
                 return ;            
@@ -49,7 +50,7 @@ namespace POS
             try
             {
                 XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Layouts\\" + ctrl.Name + "_" + uniqueName + ".xml");
+                xmlDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Layouts\\" + component.ToString() + "_" + uniqueName + ".xml");
                 string xmlString = xmlDocument.OuterXml;
 
                 using (StringReader read = new StringReader(xmlString))
@@ -60,7 +61,7 @@ namespace POS
                     using (XmlReader reader = new XmlTextReader(read))
                     {
                         T obj = (T)serializer.Deserialize(reader);
-                        ctrl.GetType().GetProperty(name).SetValue(ctrl, obj);
+                        component.GetType().GetProperty(name).SetValue(component, obj);
                         reader.Close();
                     }
 

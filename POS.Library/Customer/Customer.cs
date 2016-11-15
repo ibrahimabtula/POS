@@ -61,6 +61,11 @@ namespace POS.Library
             get { return _fName + " " + _lName; }
         }
 
+        public object Image
+        {
+            get { return null; }
+        }
+
         public string Note
         {
             get { return _note; }

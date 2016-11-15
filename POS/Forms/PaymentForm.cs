@@ -23,24 +23,6 @@ namespace POS
             FormClosing += PaymentForm_FormClosing;
             gvPayment.CustomDrawGroupRow += GvPayment_CustomDrawGroupRow;
             gvPayment.CustomDrawCell += GvPayment_CustomDrawCell;
-            tbFontSize.EditValueChanged += TbFontSize_EditValueChanged;
-        }
-
-        private void TbFontSize_EditValueChanged(object sender, EventArgs e)
-        {
-            var tb = sender as TrackBarControl;
-            var family = gvPayment.Appearance.HeaderPanel.Font.FontFamily;
-            gvPayment.Appearance.HeaderPanel.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.FocusedCell.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.FocusedRow.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.Row.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.SelectedRow.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.TopNewRow.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.GroupFooter.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.GroupButton.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.GroupPanel.Font = new Font(family, tb.Value);
-            gvPayment.Appearance.GroupRow.Font = new Font(family, tb.Value);
-
         }
 
         private void GvPayment_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
@@ -61,8 +43,6 @@ namespace POS
             gvPayment.LoadLayout(gcPayment.Name);
             AfterLoadLayout();
 
-            tbFontSize.LoadLayout<int>(this.Name, "EditValue");
-
             Search();
         }
 
@@ -77,8 +57,6 @@ namespace POS
             deTo.Properties.NullDate = DateTime.MinValue;
             deTo.Properties.NullText = string.Empty;
 
-            tbFontSize.Properties.Maximum = 18;
-            tbFontSize.Properties.Minimum = 8;
             gvPayment.OptionsView.ColumnAutoWidth = false;
             gvPayment.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             gvPayment.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
@@ -99,7 +77,6 @@ namespace POS
             }
 
             gvPayment.SaveLayout(gcPayment.Name);
-            tbFontSize.SaveLayout(this.Name, tbFontSize.EditValue);
         }
 
         private void AddGridColumns()
@@ -110,8 +87,7 @@ namespace POS
 
             var colsum = gvPayment.AddColWithSpin("Sum", "Сума");
 
-            gvPayment.AddColWithDate("PaymentDate", "Дата");
-            //gvPayment.AddColWithTime("PaymentDate", "Час");            
+            gvPayment.AddColWithDate("PaymentDate", "Дата", POSGlobal.DateTimeFormatBG);          
         }
 
         private void GvPayment_CustomDrawGroupRow(object sender, DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventArgs e)
@@ -195,6 +171,34 @@ namespace POS
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = PaymentCollection.GetPaymentCollection(e.Argument as PaymentCollection.Criteria);
+        }
+
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                if(bw!= null)
+                {
+                    bw.DoWork += bw_DoWork;
+                    bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+                }
+
+                Load -= PaymentForm_Load;
+                FormClosing -= PaymentForm_FormClosing;
+                gvPayment.CustomDrawGroupRow -= GvPayment_CustomDrawGroupRow;
+                gvPayment.CustomDrawCell -= GvPayment_CustomDrawCell;
+
+                gcPayment.DataSource = null;
+                customers = null;
+
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         #endregion

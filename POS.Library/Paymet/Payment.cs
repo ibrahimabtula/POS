@@ -3,7 +3,7 @@ using CSLA.Data;
 using Dapper;
 using System;
 using System.Data;
-using System.Data.SqlServerCe;
+using System.Data.SQLite;
 
 namespace POS.Library
 {
@@ -107,7 +107,7 @@ namespace POS.Library
             return (Payment)DataPortal.Fetch(crit);
         }
 
-        internal static Payment GetPayment(Criteria crit, SqlCeTransaction tr)
+        internal static Payment GetPayment(Criteria crit, IDbTransaction tr)
         {
             var child = NewPayment(0);
             child.DBFetch(crit, tr);
@@ -174,7 +174,7 @@ namespace POS.Library
         internal void DBFetch(Criteria crit, IDbTransaction tr)
         {
             if (!IsDirty) return;
-            using (var cm = new SqlCeCommand())
+            using (var cm = new SQLiteCommand())
             {
                   string query = @"
 SELECT

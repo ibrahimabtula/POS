@@ -81,11 +81,15 @@ namespace POS
             return col;
         }
 
-        public GridColumn AddColWithDate(string field, string caption)
+        public GridColumn AddColWithDate(string field, string caption, string format = "dd-MM-yyyy HH:mm")
         {
             var repitemDate = new RepositoryItemDateEdit();
             repitemDate.NullDate = DateTime.MinValue;
-            repitemDate.DisplayFormat.FormatString = "dd:mm:yyyy HH:mm:ss";
+            repitemDate.DisplayFormat.FormatString = format;
+            repitemDate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+            repitemDate.EditFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+            repitemDate.EditFormat.FormatString = format;
+            repitemDate.EditMask = format;
 
             var col = new GridColumn();
             col.ColumnEdit = repitemDate;
@@ -117,6 +121,22 @@ namespace POS
             return col;
         }
 
+        public GridColumn AddColWithImage(string field, string caption)
+        {
+            var repitem = new RepositoryItemImageEdit();
+
+            var col = new GridColumn();
+            col.ColumnEdit = repitem;
+            col.FieldName = field;
+            col.Caption = caption;
+            col.Name = field;
+            col.Visible = true;
+            col.VisibleIndex = 0;
+            col.Width = 150;
+            this.Columns.Add(col);
+            return col;
+        }
+
         public GridColumn AddColWithMemoEx(string field, string caption)
         {
             var repItem = new RepositoryItemMemoExEdit();
@@ -133,7 +153,7 @@ namespace POS
             return col;
         }
 
-        public GridColumn AddColWithText(string field, string caption)
+        public GridColumn AddCol(string field, string caption)
         {
             var col = new GridColumn();
             col.FieldName = field;

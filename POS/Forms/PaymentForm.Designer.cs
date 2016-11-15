@@ -7,18 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Windows Form Designer generated code
 
@@ -31,22 +19,28 @@
             this.gcPayment = new POS.POSGridControl();
             this.gvPayment = new POS.POSGridView();
             this.pnlSearch = new DevExpress.XtraEditors.PanelControl();
+            this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
+            this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.simpleLabelItem1 = new DevExpress.XtraLayout.SimpleLabelItem();
+            this.simpleLabelItem2 = new DevExpress.XtraLayout.SimpleLabelItem();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.lblFontSize = new DevExpress.XtraEditors.LabelControl();
-            this.tbFontSize = new DevExpress.XtraEditors.TrackBarControl();
             this.deTo = new DevExpress.XtraEditors.DateEdit();
             this.deFrom = new DevExpress.XtraEditors.DateEdit();
+            this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             ((System.ComponentModel.ISupportInitialize)(this.gcPayment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPayment)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnlSearch)).BeginInit();
             this.pnlSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFontSize.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTo.Properties.VistaTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deFrom.Properties.VistaTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deFrom.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             this.SuspendLayout();
             // 
             // gcPayment
@@ -85,10 +79,9 @@
             // 
             // pnlSearch
             // 
+            this.pnlSearch.Controls.Add(this.layoutControl1);
             this.pnlSearch.Controls.Add(this.labelControl2);
             this.pnlSearch.Controls.Add(this.labelControl1);
-            this.pnlSearch.Controls.Add(this.lblFontSize);
-            this.pnlSearch.Controls.Add(this.tbFontSize);
             this.pnlSearch.Controls.Add(this.deTo);
             this.pnlSearch.Controls.Add(this.deFrom);
             this.pnlSearch.Dock = System.Windows.Forms.DockStyle.Top;
@@ -97,10 +90,53 @@
             this.pnlSearch.Size = new System.Drawing.Size(997, 94);
             this.pnlSearch.TabIndex = 1;
             // 
+            // layoutControl1
+            // 
+            this.layoutControl1.BackColor = System.Drawing.Color.DimGray;
+            this.layoutControl1.Location = new System.Drawing.Point(433, 5);
+            this.layoutControl1.Name = "layoutControl1";
+            this.layoutControl1.Root = this.layoutControlGroup1;
+            this.layoutControl1.Size = new System.Drawing.Size(180, 71);
+            this.layoutControl1.TabIndex = 6;
+            this.layoutControl1.Text = "layoutControl1";
+            // 
+            // layoutControlGroup1
+            // 
+            this.layoutControlGroup1.CustomizationFormText = "Root";
+            this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.layoutControlGroup1.GroupBordersVisible = false;
+            this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.simpleLabelItem1,
+            this.simpleLabelItem2,
+            this.emptySpaceItem1});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroup1.Name = "Root";
+            this.layoutControlGroup1.Size = new System.Drawing.Size(180, 71);
+            this.layoutControlGroup1.Spacing = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
+            this.layoutControlGroup1.Text = "Root";
+            // 
+            // simpleLabelItem1
+            // 
+            this.simpleLabelItem1.CustomizationFormText = "LabelsimpleLabelItem1";
+            this.simpleLabelItem1.Location = new System.Drawing.Point(0, 0);
+            this.simpleLabelItem1.Name = "simpleLabelItem1";
+            this.simpleLabelItem1.Size = new System.Drawing.Size(160, 17);
+            this.simpleLabelItem1.Text = "LabelsimpleLabelItem1";
+            this.simpleLabelItem1.TextSize = new System.Drawing.Size(107, 13);
+            // 
+            // simpleLabelItem2
+            // 
+            this.simpleLabelItem2.CustomizationFormText = "LabelsimpleLabelItem2";
+            this.simpleLabelItem2.Location = new System.Drawing.Point(0, 34);
+            this.simpleLabelItem2.Name = "simpleLabelItem2";
+            this.simpleLabelItem2.Size = new System.Drawing.Size(160, 17);
+            this.simpleLabelItem2.Text = "LabelsimpleLabelItem2";
+            this.simpleLabelItem2.TextSize = new System.Drawing.Size(107, 13);
+            // 
             // labelControl2
             // 
             this.labelControl2.LineOrientation = DevExpress.XtraEditors.LabelLineOrientation.Vertical;
-            this.labelControl2.Location = new System.Drawing.Point(240, 12);
+            this.labelControl2.Location = new System.Drawing.Point(177, 12);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(42, 13);
             this.labelControl2.TabIndex = 5;
@@ -109,35 +145,16 @@
             // labelControl1
             // 
             this.labelControl1.LineOrientation = DevExpress.XtraEditors.LabelLineOrientation.Vertical;
-            this.labelControl1.Location = new System.Drawing.Point(119, 12);
+            this.labelControl1.Location = new System.Drawing.Point(23, 12);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(46, 13);
             this.labelControl1.TabIndex = 4;
             this.labelControl1.Text = "От дата:";
             // 
-            // lblFontSize
-            // 
-            this.lblFontSize.LineOrientation = DevExpress.XtraEditors.LabelLineOrientation.Vertical;
-            this.lblFontSize.Location = new System.Drawing.Point(17, 12);
-            this.lblFontSize.Name = "lblFontSize";
-            this.lblFontSize.Size = new System.Drawing.Size(86, 13);
-            this.lblFontSize.TabIndex = 3;
-            this.lblFontSize.Text = "Размер на текст:";
-            // 
-            // tbFontSize
-            // 
-            this.tbFontSize.EditValue = null;
-            this.tbFontSize.Location = new System.Drawing.Point(12, 22);
-            this.tbFontSize.Name = "tbFontSize";
-            this.tbFontSize.Properties.ShowValueToolTip = true;
-            this.tbFontSize.Properties.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.tbFontSize.Size = new System.Drawing.Size(87, 42);
-            this.tbFontSize.TabIndex = 2;
-            // 
             // deTo
             // 
             this.deTo.EditValue = null;
-            this.deTo.Location = new System.Drawing.Point(240, 31);
+            this.deTo.Location = new System.Drawing.Point(177, 31);
             this.deTo.Name = "deTo";
             this.deTo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -149,7 +166,7 @@
             // deFrom
             // 
             this.deFrom.EditValue = null;
-            this.deFrom.Location = new System.Drawing.Point(119, 31);
+            this.deFrom.Location = new System.Drawing.Point(23, 31);
             this.deFrom.Name = "deFrom";
             this.deFrom.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -157,6 +174,15 @@
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.deFrom.Size = new System.Drawing.Size(100, 20);
             this.deFrom.TabIndex = 0;
+            // 
+            // emptySpaceItem1
+            // 
+            this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 17);
+            this.emptySpaceItem1.Name = "emptySpaceItem1";
+            this.emptySpaceItem1.Size = new System.Drawing.Size(160, 17);
+            this.emptySpaceItem1.Text = "emptySpaceItem1";
+            this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // PaymentForm
             // 
@@ -172,12 +198,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pnlSearch)).EndInit();
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFontSize.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTo.Properties.VistaTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deTo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deFrom.Properties.VistaTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deFrom.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -189,9 +218,12 @@
         private DevExpress.XtraEditors.PanelControl pnlSearch;
         private DevExpress.XtraEditors.DateEdit deTo;
         private DevExpress.XtraEditors.DateEdit deFrom;
-        private DevExpress.XtraEditors.TrackBarControl tbFontSize;
-        private DevExpress.XtraEditors.LabelControl lblFontSize;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraLayout.LayoutControl layoutControl1;
+        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
+        private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem1;
+        private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem2;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
     }
 }

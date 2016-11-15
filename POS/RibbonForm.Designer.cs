@@ -27,9 +27,13 @@ namespace POS
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.bbiSearch = new DevExpress.XtraBars.BarButtonItem();
             this.bbiSave = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiChangeFont = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTrackBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemTrackBar();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rpgCustomer = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.dpMenu = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
@@ -38,6 +42,8 @@ namespace POS
             ((System.ComponentModel.ISupportInitialize)(this.mainRibbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.VistaTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTrackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).BeginInit();
             this.dpMenu.SuspendLayout();
             this.dockPanel1_Container.SuspendLayout();
@@ -74,14 +80,17 @@ namespace POS
             this.barButtonItem1,
             this.barButtonItem2,
             this.bbiSearch,
-            this.bbiSave});
+            this.bbiSave,
+            this.bbiChangeFont});
             this.mainRibbonControl.Location = new System.Drawing.Point(0, 0);
-            this.mainRibbonControl.MaxItemId = 14;
+            this.mainRibbonControl.MaxItemId = 16;
             this.mainRibbonControl.Name = "mainRibbonControl";
             this.mainRibbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.mainRibbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemDateEdit1});
+            this.repositoryItemDateEdit1,
+            this.repositoryItemTrackBar1,
+            this.repositoryItemHyperLinkEdit1});
             this.mainRibbonControl.SelectedPage = this.ribbonPage1;
             this.mainRibbonControl.Size = new System.Drawing.Size(1199, 144);
             this.mainRibbonControl.StatusBar = this.ribbonStatusBar1;
@@ -128,11 +137,29 @@ namespace POS
             this.bbiSave.LargeGlyph = global::POS.Properties.Resources.save32x32;
             this.bbiSave.Name = "bbiSave";
             // 
+            // bbiChangeFont
+            // 
+            this.bbiChangeFont.Edit = this.repositoryItemTrackBar1;
+            this.bbiChangeFont.EditHeight = 50;
+            this.bbiChangeFont.Hint = "Задава размера на текста в програмата";
+            this.bbiChangeFont.Id = 14;
+            this.bbiChangeFont.Name = "bbiChangeFont";
+            this.bbiChangeFont.Width = 100;
+            // 
+            // repositoryItemTrackBar1
+            // 
+            this.repositoryItemTrackBar1.Maximum = 18;
+            this.repositoryItemTrackBar1.Minimum = 8;
+            this.repositoryItemTrackBar1.Name = "repositoryItemTrackBar1";
+            this.repositoryItemTrackBar1.ShowValueToolTip = true;
+            this.repositoryItemTrackBar1.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.rpgCustomer,
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup2});
             this.ribbonPage1.Name = "ribbonPage1";
             // 
             // rpgCustomer
@@ -146,6 +173,17 @@ namespace POS
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiSave);
             this.ribbonPageGroup1.KeyTip = "A";
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.ItemLinks.Add(this.bbiChangeFont);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Размер на текст";
+            // 
+            // repositoryItemHyperLinkEdit1
+            // 
+            this.repositoryItemHyperLinkEdit1.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
             // 
             // dockManager1
             // 
@@ -166,6 +204,8 @@ namespace POS
             this.dpMenu.ID = new System.Guid("e4cfe87e-d150-4afb-8428-8aa4ad5ad203");
             this.dpMenu.Location = new System.Drawing.Point(0, 144);
             this.dpMenu.Name = "dpMenu";
+            this.dpMenu.Options.ShowCloseButton = false;
+            this.dpMenu.Options.ShowMaximizeButton = false;
             this.dpMenu.OriginalSize = new System.Drawing.Size(200, 200);
             this.dpMenu.Size = new System.Drawing.Size(200, 421);
             this.dpMenu.Text = "Menu";
@@ -183,6 +223,8 @@ namespace POS
             this.trlMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trlMenu.Location = new System.Drawing.Point(0, 0);
             this.trlMenu.Name = "trlMenu";
+            this.trlMenu.OptionsView.ShowColumns = false;
+            this.trlMenu.OptionsView.ShowIndicator = false;
             this.trlMenu.Size = new System.Drawing.Size(194, 393);
             this.trlMenu.TabIndex = 0;
             // 
@@ -206,6 +248,8 @@ namespace POS
             ((System.ComponentModel.ISupportInitialize)(this.mainRibbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.VistaTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTrackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager1)).EndInit();
             this.dpMenu.ResumeLayout(false);
             this.dockPanel1_Container.ResumeLayout(false);
@@ -235,6 +279,10 @@ namespace POS
         private RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem bbiSearch;
         private DevExpress.XtraBars.BarButtonItem bbiSave;
+        private DevExpress.XtraBars.BarEditItem bbiChangeFont;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTrackBar repositoryItemTrackBar1;
+        private RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
     }
 }
 
